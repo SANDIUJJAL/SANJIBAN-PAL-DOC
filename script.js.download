@@ -1,0 +1,805 @@
+$(document).ready(function(){
+	$( document ).on( 'focus', ':input', function(){
+        $( this ).attr( 'autocomplete', 'off' );
+    });					   
+    //get_qualification();					  
+    $("#cgpa1").mouseover(function() {
+        $(".description").show();
+    }).mouseout(function() {
+        $(".description").hide();
+    });
+    $("#cgpa2").mouseover(function() {
+        $(".description1").show();
+    }).mouseout(function() {
+        $(".description1").hide();
+    });
+    $("#cgpa3").mouseover(function() {
+        $(".description2").show();
+    }).mouseout(function() {
+        $(".description2").hide();
+    });
+    $("#cgpa4").mouseover(function() {
+        $(".description3").show();
+    }).mouseout(function() {
+        $(".description3").hide();
+    });
+    $("#cgpa5").mouseover(function() {
+        $(".description4").show();
+    }).mouseout(function() {
+        $(".description4").hide();
+    });
+    $("#cgpa6").mouseover(function() {
+        $(".description5").show();
+    }).mouseout(function() {
+        $(".description5").hide();
+    });
+    $("#desire_cgpa1").mouseover(function() {
+        $(".description6").show();
+    }).mouseout(function() {
+        $(".description6").hide();
+    });
+    $("#desire_cgpa2").mouseover(function() {
+        $(".description7").show();
+    }).mouseout(function() {
+        $(".description7").hide();
+    });
+	
+	 $("#subject1").mouseover(function() {
+        $(".subject_description1").show();
+    }).mouseout(function() {
+        $(".subject_description1").hide();
+    });
+	 
+	  $("#subject2").mouseover(function() {
+        $(".subject_description2").show();
+    }).mouseout(function() {
+        $(".subject_description2").hide();
+    });
+	  
+	$("#subject3").mouseover(function() {
+        $(".subject_description3").show();
+    }).mouseout(function() {
+        $(".subject_description3").hide();
+    });
+	 
+	 
+     var c = $("#bsc_course_name").val();
+	 //alert(c)
+    if(c === 'Physics' || c === ''){
+        $("#studphysics").hide();
+      
+    }else{
+        $("#studphysics").show();
+        
+    }
+    $("select[name=bsc_course_name]").change(function() {
+        var value = $(this).val();
+        if (value === 'Physics' || value === '') {
+            $("#studphysics").hide();
+			$('#studied_physics').val('');
+        } 
+		else {
+            $("#studphysics").show();
+        }
+    });  
+
+var mother_t = $('#mother_tongue').val();
+    if(mother_t==='Others'){
+        $('#mark_tongue').show();
+    }
+    else{
+        $('#mark_tongue').hide(); 
+    }
+   
+    // $('#mark_subcategory').hide();
+    
+    $("select[name=mother_tongue]").change(function() {
+        var value = $(this).val();
+        if (value === 'Others') {
+            $('#mark_tongue').show();
+           
+              
+        } else {
+            $('#mark_tongue').hide();
+            $("#other_mother_tongue").val('');
+           
+           
+        }
+    });  
+
+// other occupation
+
+var occupa_t = $('#guardian_occupation').val();
+    if(occupa_t==='Others'){
+        $('#mark_occupation').show();
+    }
+    else{
+        $('#mark_occupation').hide(); 
+    }
+   
+    // $('#mark_subcategory').hide();
+    
+    $("select[name=guardian_occupation]").change(function() {
+        var value = $(this).val();
+        if (value === 'Others') {
+            $('#mark_occupation').show();
+           
+              
+        } else {
+            $('#mark_occupation').hide();
+             $("#other_guardian_occupation").val('');
+          
+           
+        }
+    });  
+    
+// end
+
+    var cate = $('#category').val();
+    if(cate==='OBC (Non-Creamy Layer)'){
+        $('#mark_subcategory').show();
+    }
+    else{
+        $('#mark_subcategory').hide(); 
+    }
+   
+    // $('#mark_subcategory').hide();
+    
+    $("select[name=category]").change(function() {
+        var value = $(this).val();
+        if (value === 'OBC (Non-Creamy Layer)') {
+            $('#mark_subcategory').show();
+           
+              
+        } else {
+            $('#mark_subcategory').hide();  
+             $("#sub_category").val('');
+            
+           
+        }
+    });   
+    var disb = $('#disability').val();
+    if(disb==='YES'){
+        $('#mark_disability').show();
+    }
+    else{
+        $('#mark_disability').hide(); 
+    }
+    
+    // $('#mark_disability').hide();
+    
+    $("select[name=disability]").change(function() {
+        var value = $(this).val();
+        if (value === 'YES') {
+            $('#mark_disability').show();
+        } else {
+            $('#mark_disability').hide();  
+            $('#disability_nature').val('');
+        }
+    });  
+    
+    var exservice = $('#exservicemenn').val();
+    if(exservice==='YES'){
+        $('#mark_joinning').show();
+        $('#mark_exit').show();
+    }
+    else{
+        $('#mark_joinning').hide(); 
+        $('#mark_exit').hide(); 
+    }
+    // $('#mark_joinning').hide();
+    //$('#mark_exit').hide();
+      
+    $("select[name=exservicemenn]").change(function() {
+        var value = $(this).val();
+        if (value === 'YES') {
+            $('#mark_joinning').show();
+            $('#mark_exit').show();
+        } else {
+            $('#mark_joinning').hide();  
+            $('#mark_exit').hide();  
+            $('#joinning_date input[type=text]').val('');
+            $('#exit_date input[type=text]').val('');
+        }
+    });  
+    
+    
+    var chosen=[]
+    var dates = $("#doe1, #doe2, #doe3").datepicker({
+        minDate: "0",
+        maxDate: "+2Y",
+        defaultDate: "+1w",
+        dateFormat: 'dd/mm/yy',
+        numberOfMonths: 1,
+        beforeShowDay: function(date){
+            var mmddyy=$.datepicker.formatDate(  'dd/mm/yy', date ),
+            sameAs=$.inArray(mmddyy,chosen)
+            console.log(mmddyy)
+            if (sameAs>=0)
+                return  [false, "nope","Same as "+(1+sameAs)]
+            else
+                return [true]
+        },
+        onSelect: function(date) {
+            chosen=dates.map(function(){
+                return this.value
+            }).get()
+            console.log(chosen)
+        /*
+        for(var i = 0; i < dates.length; ++i) {
+            if(dates[i].id < this.id)
+                $(dates[i]).datepicker('option', 'maxDate', date);
+            else if(dates[i].id > this.id)
+                $(dates[i]).datepicker('option', 'minDate', date);
+        }
+        */
+        } 
+    });
+    //     var _data = $("#exam_mode").val();
+    //        
+    //        $.post("get_center.php",{
+    //            _data:_data
+    //        },function(_response){
+    //          
+    //            $('#centercode1').html(_response);
+    //            $('#centercode2').html(_response);
+    //            $('#centercode3').html(_response);
+    //        });
+    //    $("select[name=exam_mode]").change(function() {
+    //        var _data = $(this).val();
+    //        
+    //        $.post("get_center.php",{
+    //            _data:_data
+    //        },function(_response){
+    //           
+    //            $('#centercode1').html(_response);
+    //            $('#centercode2').html(_response);
+    //            $('#centercode3').html(_response);
+    //        });
+    //    });
+    //$('input[type=text][readonly]').css('background-color','#F1F1F1');
+    $('input[type=text][disabled]').css('background-color','#F1F1F1');
+    if($('#specify').val() == ''){
+        $('#spec').hide();
+        
+    }else{
+        $('#spec').show();
+    }
+	
+    $("select[name=nationality]").change(function() {
+		//alert('tesr');
+        var selectval = $(this).val();
+        if(selectval=='Others'){
+            alert("You are not Eligible for CET 2017");
+            $('#nationality').prop('selectedIndex',0);
+        }
+    });
+	 
+   
+	
+	
+    $("input:radio[name=isphotoupload]").change(function() {
+        var value = $(this).val();
+        if(value=='1'){
+            $('.photograph').removeClass('hidden');
+            $('.photograph').addClass('required');
+        }else{
+            $('.photograph').addClass('hidden');
+            $('.photograph').removeClass('required');
+        }
+    });
+	
+    $("input:radio[name=isdocupload]").change(function() {
+        var value = $(this).val();
+        if(value=='1'){
+            $('#docupload').removeClass('hidden');
+
+        }else{
+            $('#docupload').addClass('hidden');
+  
+        }
+    });
+   
+	
+   
+	
+    $("input:radio[name=mode]").change(function() {
+        var value = $(this).val();
+    	
+        if(value=='1'){
+            $('#onlinebox').removeClass('hidden');
+            $('#onlinebox input').addClass('required');
+    		
+            $('#offlinebox').addClass('hidden');
+            $('#offlinebox input').removeClass('required');
+    			
+            $('#challanbankdetailsbox').addClass('hidden');
+            $('#challanbankdetailsbox input').removeClass('required');
+            $('#challanbankdetailsbox select').removeClass('required');
+    		
+        }else{
+            $('#onlinebox').addClass('hidden');
+            $('#onlinebox input').removeClass('required');
+    			
+            $('#offlinebox').removeClass('hidden');
+            $('#offlinebox input:radio').attr('checked', false);
+            $('#offlinebox input').addClass('required');
+            $('#challanbankdetailsbox input[type=text]').val('');
+            $('#challanbankdetailsbox select').val('');
+            $('#challanbankdetailsbox').removeClass('hidden');
+            $('#challanbankdetailsbox input').addClass('required');
+            $('#challanbankdetailsbox select').addClass('required');
+        }
+    });
+	
+    $("input:radio[name=bankchallanupload]").change(function() {
+        var value = $(this).val();
+        if(value=='1'){
+            $('#challanuploadbox').removeClass('hidden');
+            $('#challanuploadbox input').addClass('required');
+        }else{
+            $('#challanuploadbox').addClass('hidden');
+            $('#challanuploadbox input').removeClass('required');
+        }
+    });
+    $("input:radio[name=otherentrence]").change(function() {
+        var value = $(this).val();
+        if(value == 'Yes') {
+            $('#other_entrance_box').show();
+            $('#otherentrenceinfo').addClass('required');
+        } else {
+            $('#other_entrance_box').hide();	
+            $('#otherentrenceinfo').val('');		
+            $('#otherentrenceinfo').removeClass('required');
+        }
+    });
+    
+  
+   
+    $('#cc').hide();
+    $('#nb').hide();
+   
+
+    $("input:radio[name=onlineOption]").change(function() {
+        var value = $(this).val();
+        if(value == 'cc/dc') 
+        {
+            $('#cc').show();
+            $('#nb').hide();
+        } 
+        else 
+        {
+            $('#cc').hide();
+            $('#nb').show();
+        }
+    });
+
+    
+
+	
+    $('#showphotoupload').click(function(){		
+        $('.photograph').show();
+        $('.photograph').addClass('required');
+    });
+    $('#showdocupload').click(function(){
+        $('#docupload').removeClass('hidden');	
+    });
+ 
+	
+    $('#loginform').validate({
+        rules: {
+            email: {
+                required: true,
+                email: true
+            },
+            day: {
+                required: true
+            },
+            month: {
+                required: true
+            },
+            year: {
+                required: true
+            }
+        },
+        messages: {
+            email: {
+                required: _REQUIRED_EMAIL,
+                email:_INVALID_EMAIL
+            },
+            day: {
+                required: _REQUIRED_DAY
+            },
+            month: {
+                required: _REQUIRED_MONTH
+            },
+            year: {
+                required: _REQUIRED_YEAR
+            }
+        }
+    });
+		
+    $('#register').validate({
+        groups: {
+            nameGroup: "day month year"
+        },
+        rules: {
+            
+            std_code:{
+                number: true,
+                required:false,
+                maxlength:5
+            },
+            phone_number:{
+                number: true,
+                required:false,
+                maxlength:10
+            },
+            english_percentage1:{
+                max:100
+            },
+            english_percentage2:{
+                max:100
+            },
+            english_percentage3:{
+                max:100
+            },
+            board_percentage:{
+                max:100
+            },
+            
+            
+            graduate_maximum_mark:{
+                max:100
+            },
+            graduate_maximum_mark1:{
+                max:100
+            },
+            graduate_maximum_mark2:{
+                max:100
+            },
+            acd_percentage5:{
+                max:100
+            },
+			 acd_percentage6:{
+                max:100
+            },
+            desire_percentage1:{
+                max:100
+            },
+            desire_percentage2:{
+                max:100
+            },
+             
+            address:{
+                required:true
+            },
+            city:{
+                required:true,
+                lettersonly:true
+            },
+            country:{
+                required:true
+            },
+            ccode:{
+                maxlength:5,
+                minlength:2,
+                number:true
+            },
+            cadd_zipcode:{
+                required:true,
+                minlength:6,
+                maxlength:6,
+                number:true
+            },
+            padd_zipcode:{
+                required:true,
+                minlength:6,
+                maxlength:6,
+                number:true
+            },
+            phoneNumber:{
+                maxlength:10,
+                minlength:5,
+                number:true
+            },
+           /* mobileNum:{
+                required:true,
+                minlength:10,
+                maxlength:10,
+                number:true
+            },*/
+            land_line_number:{
+                required:false,
+                minlength:10,
+                maxlength:10,
+                number:true
+            },
+            otherNum:{
+                minlength:10,
+                maxlength:10,
+                number:true
+            },
+            /*email: {
+                required: true,
+                email: true
+            },
+            email_confirm: {
+                required: true,
+                email_confirm: true
+            },*/
+            day: {
+                required: true
+            },
+            month: {
+                required: true
+            },
+            year: {
+                required: true
+            },
+            aboutapu:{
+                required: true
+            }
+        },
+        messages: {
+            ccode:{
+                required:_STDCODE_REQUIRED,
+                number:_STDCODE_NUMBERONLY
+            },
+            phoneNumber:{
+                required:_TELEPHONE_REQUIRED,
+                number:_TELEPHONE_NUMBERONLY,
+                maxlength:_TELEPHONE_LIMIT
+            },
+            mobileNum:{
+                maxlength:_TELEPHONE_LIMIT
+            },
+            otherNum:{
+                maxlength:_TELEPHONE_LIMIT
+            },
+            email: {
+                required: _REQUIRED_EMAIL,
+                email:_INVALID_EMAIL
+            },
+            email_confirm: {
+                required: _REQUIRED_EMAIL,
+                email_confirm:_INVALID_EMAIL
+            },
+            day: {
+                required: 'Day field is mandatory'
+            },
+            month: {
+                required: 'Month field is mandatory'
+            },
+            year: {
+                required: 'Year field is mandatory'
+            }
+        }
+    });
+    var _VALID_CODE = "Invalid entry. Please enter distinct language";
+
+
+    if($.validator) {
+        $.validator.addMethod('uniquecodefn1', function(value, ele) {
+            return !($('#centercode2').val() == value || $('#centercode3').val() == value);
+        }, _VALID_CODE);
+        $.validator.addMethod("lettersonly", function(value, element) {
+            return this.optional(element) || /^[a-z ]+$/i.test(value);
+        }, "Please enter alphabets only");
+		$.validator.addMethod("lettersonlywithdot", function(value, element) {
+            return this.optional(element) || /^[a-z .]+$/i.test(value);
+        }, "Please enter alphabets, spaces, fulstop only");
+        $.validator.addMethod("spcharacters", function(value, element) {
+            return this.optional(element) || /^[a-z ,.]+$/i.test(value);
+        }, "Please enter alphabets, spaces, fulstop & commas only");
+        $.validator.addMethod("decimal", function(value, element) {
+            return this.optional(element) || /^[0-9.]+$/i.test(value);
+        }, "Please enter valid CGPA/number");
+        $.validator.addMethod("alphanum", function(value, element) {
+            return this.optional(element) || /^[a-zA-Z0-9]+$/i.test(value);
+        }, "Please enter alphabets & numbers only");
+
+        $.validator.addMethod('uniquecodefn2', function(value, ele) {
+            return !($('#centercode1').val() == value || $('#centercode3').val() == value);
+        }, _VALID_CODE);
+        $.validator.addMethod('uniquecodefn3', function(value, ele) {
+            return !($('#centercode2').val() == value || $('#centercode1').val() == value);
+        }, _VALID_CODE);
+        $.validator.addMethod('uniquecodefn4', function(value, ele) {
+            return ($('#intcentercode2').val() != value);
+        }, _VALID_CODE);
+        $.validator.addMethod('uniquecodefn5', function(value, ele) {
+            return ($('#intcentercode1').val() != value);
+        }, _VALID_CODE);
+		
+        $.validator.addMethod('uniquecodefn6', function(value, ele) {
+            return !($('#langtwo').val() == value || $('#langthree').val() == value);
+        }, _VALID_CODE);
+        $.validator.addMethod('uniquecodefn7', function(value, ele) {
+            return !(($('#langone').val() == value || $('#langthree').val() == value) && value!="");
+        }, _VALID_CODE);
+        $.validator.addMethod('uniquecodefn8', function(value, ele) {
+            return !(($('#langone').val() == value || $('#langtwo').val() == value) && value!="");
+        }, _VALID_CODE);
+		
+	
+    }
+		
+    $('#personalForm').validate({
+        rules: {
+            parentName:{
+                required:true,
+                maxlength:45,
+                lettersonly:true
+            },
+            parentNames:{
+                required:true,
+                maxlength:45,
+                lettersonlywithdot:true
+            },
+            
+            email: {
+                required: true,
+                email: true
+            },
+            day: {
+                required: true
+            },
+            month: {
+                required: true
+            },
+            year: {
+                required: true
+            },
+            centercode1 : {
+                uniquecodefn1 : true
+            },
+            centercode2 : {
+                uniquecodefn2 : true
+            },
+            centercode3 : {
+                uniquecodefn3 : true
+            },
+            intcentercode1 : {
+                uniquecodefn4 : true
+            },
+            intcentercode2 : {
+                uniquecodefn5 : true
+            },
+            langone : {
+                uniquecodefn6 : true
+            },
+            langtwo : {
+                uniquecodefn7 : true
+            },
+            langthree : {
+                uniquecodefn8 : true
+            },
+            photograph:{
+                accept: "jpg|JPG"
+            }
+        },
+        messages: {
+            ccode:{
+                required:_STDCODE_REQUIRED,
+                number:_STDCODE_NUMBERONLY
+            },
+            phoneNumber:{
+                required:_TELEPHONE_REQUIRED,
+                number:_TELEPHONE_NUMBERONLY
+            },
+            email: {
+                required: _REQUIRED_EMAIL,
+                email:_INVALID_EMAIL
+            },
+            day: {
+                required: _REQUIRED_DAY
+            },
+            month: {
+                required: _REQUIRED_MONTH
+            },
+            year: {
+                required: _REQUIRED_YEAR
+            },
+            nograduationday: {
+                required: _REQUIRED_DAY
+            },
+            nograduationmonth: {
+                required: _REQUIRED_MONTH
+            },
+            nograduationyear: {
+                required: _REQUIRED_YEAR
+            }
+        }
+    });
+		
+		
+    $('#acceptterms').click(function(){
+			
+        if($('#terms').is(':checked')){
+            opener.location.href = "index.php?rt=index/submitApproval&submitted=1";
+            close();
+        }else
+            $('#alertError').html('Please accept terms and conditions to proceed.');
+			
+						
+    });
+		
+    $('#acceptcancel').click(function(){
+        window.close();
+    });
+    $('select[name*="prelm_center"] option').attr('disabled',false);
+	
+    // loop each select and set the selected value to disabled in all other selects
+    $('select[name*="prelm_center"]').each(function(){
+        var $this = $(this);
+        $(this).find('option:selected').attr('disabled',false);
+        $('select[name*="prelm_center"]').not($this).find('option').each(function(){
+            if($(this).attr('value') == $this.val())
+                $(this).attr('disabled',true);
+        });
+    });
+        
+    $('select[name*="prelm_center"]').change(function(){
+        // start by setting everything to enabled
+        $('select[name*="prelm_center"] option').attr('disabled',false);
+	
+        // loop each select and set the selected value to disabled in all other selects
+        $('select[name*="prelm_center"]').each(function(){
+            var $this = $(this);
+            $(this).find('option:selected').attr('disabled',false);
+            $('select[name*="prelm_center"]').not($this).find('option').each(function(){
+                if($(this).attr('value') == $this.val())
+                    $(this).attr('disabled',true);
+            });
+        });
+	
+    });
+    
+	
+  $('#basicregister').live("click",function(){
+         //alert('test');
+          console.log("Data Shown Successfully");
+        if ($('#declare').is(':checked')) {
+           
+//  window.location.href = "https://bind.online-ap1.com/index_controller/register";
+window.location.href = "http://moody2017-stagging.azurewebsites.net/";
+           
+         
+  //window.location.href = "http://localhost:8080/BAYLND/index_controller/register";
+            
+        } else
+            $('#alertError').html('Please tick the check box');
+
+
+    }); 
+	
+	
+	
+});
+
+
+
+//function ageCount() {
+//    var date1 = new Date("01/07/2014");
+//    var dob = document.getElementById("dob").value;
+//    //var dob = $('#dob').datepicker('getDate');
+//    var date2 = new Date(dob);
+//    var pattern = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+//    //Regex to validate date format (dd/mm/yyyy)       
+//    if (pattern.test(dob)) {
+//        var y1 = date1.getFullYear();
+//        //getting current year            
+//        var y2 = date2.getFullYear();
+//        //getting dob year            
+//        var age = y1 - y2;
+//        //calculating age                       
+//        document.getElementById("ageId").value = age;
+//        doucment.getElementById("ageId").focus ();
+//        return true;
+//    } else {
+//        alert("Invalid date format. Please Input in (dd/mm/yyyy) format!");
+//        return false;
+//    }
+//
+//}
